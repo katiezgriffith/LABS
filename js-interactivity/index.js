@@ -1,36 +1,67 @@
-// let inputField= document.querySelector('input');
-// let movie = document.createElement("Movie Titles);
-// let addBtn = document.querySelector("#add");
-// let cancelbtn = document.querySelector()
+let message = document.querySelector("#message")
 
-// console.log(inputField.textContent);
+let addMovie = (event) => {
+    event.preventDefault();
+    let inputField = document.querySelector("input"); 
+    //could place an if/else statement so that blank inputs could not be added.
+    let movie = document.createElement('Li');
+    let movieTitle = document.createElement('span');
 
-// inputField.textContent = "Movie Title"
+        movieTitle.textContent = inputField.value;
 
-let addMovie= (event) => {
-    let inputField= document.querySelector('input'); 
-    event.preventDefault(); 
-    
-    let movie = document.createElement("li")
-    
-    let movieTitle= document.createElement("span");
-       movieTitle.textContent=
-       inputField.value
+        movieTitle.addEventListener("click", crossOffMovie);
 
-       movie.appendChild(movieTitle);
+        movie.appendChild(movieTitle);
 
-       let list = document.querySelector("ul");
+    let deleteBtn = document.createElement("button");
+
+        deleteBtn.textContent = "delete";
+
+        deleteBtn.addEventListener("click", deleteMovie);
+
+        movie.appendChild(deleteBtn);
+
+    let list = document.querySelector('ul');
 
         list.appendChild(movie);
-        
-        inputField.value = ''
 
-
-
-
+        inputField.value = "";
 };
-    let form = document.querySelector("form")
-    
-    form.addEventListener("submit", addMovie);
 
-//addMovie();
+let form = document.querySelector("form");
+
+    form.addEventListener("submit", addMovie);
+// lines 31-32 could be written as 'document.querySelector('form').addEventListener("submit", addMovie);
+
+let deleteMovie = (event) => {
+
+        event.target.parentNode.remove();
+
+        message.textContent = `${event.target.parentNode.firstChild.textContent} has been deleted!`;
+        //console.log(message.textContent);
+
+    revealMessage();
+};
+
+let crossOffMovie = (event) => {
+
+        event.target.classList.toggle("checked");
+
+    if (event.target.classList.contains("checked")){
+        message.textContent = `${event.target.textContent} Watched!`;
+    } else {
+        message.textContent = `${event.target.textContent} added back!`;
+    }
+    revealMessage();
+};
+
+let revealMessage = () => {
+
+        message.classList.remove("hide");
+
+    setTimeout(()=> {
+        message.classList.add("hide");
+    } , 1000)
+}
+  
+
